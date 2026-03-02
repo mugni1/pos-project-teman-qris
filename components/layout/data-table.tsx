@@ -109,7 +109,7 @@ export function DataTable<TData, TValue>({
       <div className="flex flex-col md:flex-row justify-between gap-2">
         <InputGroup className="max-w-sm">
           <InputGroupInput
-            placeholder="Search..."
+            placeholder="Pencarian.."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

@@ -7,6 +7,7 @@ import { LoginResponse } from "@/@types/auth.type";
 import { GetParams } from "@/@types/global.type";
 import { GetCategoryResponse } from "@/@types/category.type";
 import { GetItemResponse } from "@/@types/item.type";
+import { GetOrderResponse } from "@/@types/order.type";
 
 export const loginServices = async (
   payload: z.infer<typeof loginSchema>,
@@ -24,4 +25,10 @@ export const getItemServices = async (
   params?: GetParams,
 ): Promise<AxiosResponse<GetItemResponse>> => {
   return httpClient.get(ENDPOINT.ITEM, { params });
+};
+
+export const getOrderServices = async (
+  params?: GetParams,
+): Promise<AxiosResponse<GetOrderResponse>> => {
+  return httpClient.get(ENDPOINT.ORDER, { params });
 };
