@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontalIcon, PencilIcon, TrashIcon } from "lucide-react";
+import { Eye, MoreHorizontalIcon, PencilIcon, TrashIcon } from "lucide-react";
 
 export const columns: ColumnDef<News>[] = [
   {
@@ -72,7 +72,7 @@ export const columns: ColumnDef<News>[] = [
   {
     id: "actions",
     header: () => {
-      return <span>Action</span>;
+      return <span>Tindakan</span>;
     },
     enableSorting: false,
     cell: () => {
@@ -84,12 +84,15 @@ export const columns: ColumnDef<News>[] = [
               <MoreHorizontalIcon className="size-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent align="end" className="font-sans">
             <DropdownMenuItem>
-              <PencilIcon /> Update
+              <Eye /> Lihat
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <PencilIcon /> Edit
             </DropdownMenuItem>
             <DropdownMenuItem variant="destructive">
-              <TrashIcon /> Delete
+              <TrashIcon /> Hapus
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
