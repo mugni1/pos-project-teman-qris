@@ -32,6 +32,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { NewspaperIcon } from "lucide-react";
 
 const data = {
   navMain: [
@@ -41,14 +42,19 @@ const data = {
       icon: IconDashboard,
     },
     {
+      title: "Kategori",
+      url: "/category",
+      icon: IconChartBar,
+    },
+    {
       title: "Produk",
       url: "/item",
       icon: IconListDetails,
     },
     {
-      title: "Kategori",
-      url: "/category",
-      icon: IconChartBar,
+      title: "Berita",
+      url: "/news",
+      icon: NewspaperIcon,
     },
     {
       title: "Transaksi",
