@@ -23,7 +23,7 @@ export const columns: ColumnDef<Category>[] = [
           <img
             src={data.image_url}
             alt={data.title}
-            className="bg-red-400 aspect-square rounded-md w-20"
+            className="bg-card-foreground aspect-square rounded-md w-20"
           />
         </div>
       );
