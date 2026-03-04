@@ -5,10 +5,15 @@ import { ENDPOINT } from "./endpoint";
 import { AxiosResponse } from "axios";
 import { LoginResponse } from "@/@types/auth.type";
 import { GetParams } from "@/@types/global.type";
-import { GetCategoryResponse } from "@/@types/category.type";
+import {
+  CreateCategoryResponse,
+  GetCategoryResponse,
+} from "@/@types/category.type";
 import { GetItemResponse } from "@/@types/item.type";
 import { GetOrderResponse } from "@/@types/order.type";
 import { GetNewsResponse } from "@/@types/news.type";
+import { CreateCategoryPayloadService } from "@/validator/category.schema";
+import { UploadResponse } from "@/@types/upload.type";
 
 export const loginServices = async (
   payload: z.infer<typeof loginSchema>,
@@ -20,6 +25,23 @@ export const getCategoryServices = async (
   params?: GetParams,
 ): Promise<AxiosResponse<GetCategoryResponse>> => {
   return httpClient.get(ENDPOINT.CATEGORY, { params });
+};
+export const createCategoryServices = async (
+  payload: CreateCategoryPayloadService,
+): Promise<AxiosResponse<CreateCategoryResponse>> => {
+  return httpClient.post(ENDPOINT.CATEGORY, payload);
+};
+
+export const uploadServices = async (
+  file: File,
+): Promise<AxiosResponse<UploadResponse>> => {
+  const formData = new FormData();
+  formData.append("image", file);
+  return httpClient.post(ENDPOINT.UPLOAD, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 };
 
 export const getItemServices = async (

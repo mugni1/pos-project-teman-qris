@@ -23,3 +23,11 @@ export interface GetCategoryResponse {
   meta: Meta | null;
   errors: null;
 }
+
+export interface CreateCategoryResponse {
+  status: HttpStatusCode;
+  message: string;
+  data: Category | null;
+  meta: null;
+  errors: null;
+}
