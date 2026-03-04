@@ -3,10 +3,9 @@
 import { Category } from "@/@types/category.type";
 import { columns } from "@/app/(root)/category/column";
 import { DataTable } from "@/components/layout/data-table";
-import { Button } from "@/components/ui/button";
 import { useGetCategory } from "@/hooks/useGetCategory";
-import { PlusIcon } from "lucide-react";
 import { useEffect, useState } from "react";
+import { AddCategory } from "./_form/add.category";
 
 export default function Page() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -59,12 +58,7 @@ export default function Page() {
         setSortBy(nextSortBy);
         setPage("1");
       }}
-      createSlot={
-        <Button type="button">
-          <PlusIcon className="size-4" />
-          Tambah Kategori
-        </Button>
-      }
+      createSlot={<AddCategory />}
     />
   );
 }
