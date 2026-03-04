@@ -7,6 +7,7 @@ import { LoginResponse } from "@/@types/auth.type";
 import { GetParams } from "@/@types/global.type";
 import {
   CreateCategoryResponse,
+  DeleteCategoryResponse,
   GetCategoryResponse,
 } from "@/@types/category.type";
 import { GetItemResponse } from "@/@types/item.type";
@@ -14,6 +15,18 @@ import { GetOrderResponse } from "@/@types/order.type";
 import { GetNewsResponse } from "@/@types/news.type";
 import { CreateCategoryPayloadService } from "@/validator/category.schema";
 import { UploadResponse } from "@/@types/upload.type";
+
+export const uploadServices = async (
+  file: File,
+): Promise<AxiosResponse<UploadResponse>> => {
+  const formData = new FormData();
+  formData.append("image", file);
+  return httpClient.post(ENDPOINT.UPLOAD, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
 
 export const loginServices = async (
   payload: z.infer<typeof loginSchema>,
@@ -31,17 +44,10 @@ export const createCategoryServices = async (
 ): Promise<AxiosResponse<CreateCategoryResponse>> => {
   return httpClient.post(ENDPOINT.CATEGORY, payload);
 };
-
-export const uploadServices = async (
-  file: File,
-): Promise<AxiosResponse<UploadResponse>> => {
-  const formData = new FormData();
-  formData.append("image", file);
-  return httpClient.post(ENDPOINT.UPLOAD, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+export const deleteCategoryServices = async (
+  id: string,
+): Promise<AxiosResponse<DeleteCategoryResponse>> => {
+  return httpClient.delete(`${ENDPOINT.CATEGORY}/${id}`);
 };
 
 export const getItemServices = async (

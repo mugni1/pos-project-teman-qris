@@ -31,3 +31,11 @@ export interface CreateCategoryResponse {
   meta: null;
   errors: null;
 }
+
+export interface DeleteCategoryResponse {
+  status: HttpStatusCode;
+  message: string;
+  data: Category | null;
+  meta: null;
+  errors: null;
+}

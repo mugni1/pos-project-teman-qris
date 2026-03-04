@@ -1,6 +1,7 @@
 "use client";
 
 import { Category } from "@/@types/category.type";
+import { GetParams } from "@/@types/global.type";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,9 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, MoreHorizontalIcon, PencilIcon, TrashIcon } from "lucide-react";
+import { Eye, MoreHorizontalIcon, PencilIcon } from "lucide-react";
+import DeleteCategory from "./_form/delete.category";
 
-export const columns: ColumnDef<Category>[] = [
+export const columns = (params?: GetParams): ColumnDef<Category>[] => [
   {
     accessorKey: "image_url",
     header: "Gambar",
@@ -23,7 +25,7 @@ export const columns: ColumnDef<Category>[] = [
           <img
             src={data.image_url}
             alt={data.title}
-            className="bg-card-foreground aspect-square rounded-md h-20"
+            className="bg-card-foreground aspect-square rounded-md h-20 "
           />
         </div>
       );
@@ -36,11 +38,11 @@ export const columns: ColumnDef<Category>[] = [
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <div>
+        <div className="w-60 h-20">
           <img
             src={data.cover_url}
             alt={data.title}
-            className="bg-card-foreground  rounded-md h-20 w-auto"
+            className="bg-card-foreground  rounded-md  w-full h-full object-cover object-center"
           />
         </div>
       );
@@ -76,7 +78,7 @@ export const columns: ColumnDef<Category>[] = [
       return <span>Tindakan</span>;
     },
     enableSorting: false,
-    cell: () => {
+    cell: ({ row }) => {
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -92,9 +94,7 @@ export const columns: ColumnDef<Category>[] = [
             <DropdownMenuItem>
               <PencilIcon /> Edit
             </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive">
-              <TrashIcon /> Hapus
-            </DropdownMenuItem>
+            <DeleteCategory category={row.original} params={params} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

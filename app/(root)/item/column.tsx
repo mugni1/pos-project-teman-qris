@@ -23,7 +23,7 @@ export const columns: ColumnDef<Item>[] = [
           <img
             src={data.image_url}
             alt={data.title}
-            className="aspect-square bg-card-foreground rounded-md w-15 object-cover"
+            className="aspect-square rounded-md w-15 object-cover"
           />
         </div>
       );

@@ -45,7 +45,7 @@ export default function Page() {
   // render
   return (
     <DataTable
-      columns={columns}
+      columns={columns(params)}
       data={categories}
       isPending={isPending}
       search={search}
