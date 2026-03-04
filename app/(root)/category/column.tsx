@@ -23,7 +23,24 @@ export const columns: ColumnDef<Category>[] = [
           <img
             src={data.image_url}
             alt={data.title}
-            className="bg-card-foreground aspect-square rounded-md w-20"
+            className="bg-card-foreground aspect-square rounded-md h-20"
+          />
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "cover_url",
+    header: "Banner",
+    enableSorting: true,
+    cell: ({ row }) => {
+      const data = row.original;
+      return (
+        <div>
+          <img
+            src={data.cover_url}
+            alt={data.title}
+            className="bg-card-foreground  rounded-md h-20 w-auto"
           />
         </div>
       );

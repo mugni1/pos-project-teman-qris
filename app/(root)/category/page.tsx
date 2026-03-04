@@ -15,13 +15,16 @@ export default function Page() {
   const [limit] = useState("5");
   const [orderBy, setOrderBy] = useState("created_at");
   const [sortBy, setSortBy] = useState<"asc" | "desc">("desc");
-  const { data, isPending } = useGetCategory({
+
+  // get category
+  const params = {
     search: searchDeb,
     limit,
     page,
     order_by: orderBy,
     sort_by: sortBy,
-  });
+  };
+  const { data, isPending } = useGetCategory(params);
 
   // debounce
   useEffect(() => {
@@ -58,7 +61,7 @@ export default function Page() {
         setSortBy(nextSortBy);
         setPage("1");
       }}
-      createSlot={<AddCategory />}
+      createSlot={<AddCategory getParams={params} />}
     />
   );
 }
