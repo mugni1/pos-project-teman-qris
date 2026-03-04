@@ -5,7 +5,7 @@ import { columns } from "@/app/(root)/category/column";
 import { DataTable } from "@/components/layout/data-table";
 import { useGetCategory } from "@/hooks/useGetCategory";
 import { useEffect, useState } from "react";
-import { AddCategory } from "./_form/add.category";
+import { CreateCategory } from "./_form/create.category";
 
 export default function Page() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -61,7 +61,7 @@ export default function Page() {
         setSortBy(nextSortBy);
         setPage("1");
       }}
-      createSlot={<AddCategory getParams={params} />}
+      createSlot={<CreateCategory getParams={params} />}
     />
   );
 }

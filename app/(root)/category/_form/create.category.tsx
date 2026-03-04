@@ -47,7 +47,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export function AddCategory({ getParams }: { getParams: GetParams }) {
+export function CreateCategory({ getParams }: { getParams: GetParams }) {
   // state
   const queryClient = useQueryClient();
   const { mutateAsync: createMutate } = useCreateCategory();

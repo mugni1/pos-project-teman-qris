@@ -69,7 +69,15 @@ export const columns = (params?: GetParams): ColumnDef<Category>[] => [
     header: "Tipe",
     cell: ({ row }) => {
       const data = row.original;
-      return <div className="capitalize w-30">{data.type}</div>;
+      return (
+        <div className="capitalize w-30">
+          {data.type == "credit_and_quota" && "Pulsa & Kuota"}
+          {data.type == "credit" && "Pulsa"}
+          {data.type == "quota" && "Kuota"}
+          {data.type == "games" && "Permainan"}
+          {data.type == "check" && "Tagihan"}
+        </div>
+      );
     },
   },
   {
