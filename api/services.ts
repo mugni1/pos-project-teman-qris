@@ -9,11 +9,15 @@ import {
   CreateCategoryResponse,
   DeleteCategoryResponse,
   GetCategoryResponse,
+  UpdateCategoryResponse,
 } from "@/@types/category.type";
 import { GetItemResponse } from "@/@types/item.type";
 import { GetOrderResponse } from "@/@types/order.type";
 import { GetNewsResponse } from "@/@types/news.type";
-import { CreateCategoryPayloadService } from "@/validator/category.schema";
+import {
+  CreateCategoryPayloadService,
+  UpdateCategoryPayloadService,
+} from "@/validator/category.schema";
 import { UploadResponse } from "@/@types/upload.type";
 
 export const uploadServices = async (
@@ -43,6 +47,11 @@ export const createCategoryServices = async (
   payload: CreateCategoryPayloadService,
 ): Promise<AxiosResponse<CreateCategoryResponse>> => {
   return httpClient.post(ENDPOINT.CATEGORY, payload);
+};
+export const updateCategoryServices = async (
+  payload: UpdateCategoryPayloadService,
+): Promise<AxiosResponse<UpdateCategoryResponse>> => {
+  return httpClient.put(`${ENDPOINT.CATEGORY}/${payload.id}`, payload);
 };
 export const deleteCategoryServices = async (
   id: string,

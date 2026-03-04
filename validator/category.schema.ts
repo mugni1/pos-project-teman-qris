@@ -68,3 +68,78 @@ export type CreateCategoryPayloadService = Omit<
   image_url: string;
   cover_url: string;
 };
+
+const updateImageSchema = (fieldLabel: string) =>
+  z.preprocess(
+    (value) => {
+      if (typeof FileList !== "undefined" && value instanceof FileList) {
+        return value.length > 0 ? value.item(0) : undefined;
+      }
+      if (value === null || value === "") {
+        return undefined;
+      }
+      return value;
+    },
+    z
+      .custom<File>(
+        (value) => typeof File !== "undefined" && value instanceof File,
+        { message: `${fieldLabel} wajib diisi` },
+      )
+      .refine((file) => file.size <= MAX_IMAGE_SIZE, {
+        message: `${fieldLabel} maksimal 3MB`,
+      })
+      .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
+        message: `${fieldLabel} harus berformat JPG, JPEG, PNG, atau WEBP`,
+      })
+      .optional(),
+  );
+
+export const updateCategorySchema = z.object({
+  title: z
+    .string({ message: "Judul wajib diisi" })
+    .min(3, "Minimal judul harus terdiri dari 3 karakter")
+    .max(150, "Maksimal judul adalah 150 karakter")
+    .optional(),
+  studio: z
+    .string({ message: "Studio wajib diisi" })
+    .min(3, "Minimal studio harus terdiri dari 3 karakter")
+    .max(50, "Maksimal studio adalah 50 karakter")
+    .optional(),
+  image: updateImageSchema("Gambar utama"),
+  cover: updateImageSchema("Gambar cover"),
+  type: z
+    .enum(["credit", "quota", "games", "bill"], {
+      message: "Tipe harus salah satu dari: pulsa, kuota, permainan, tagihan",
+    })
+    .optional(),
+  column_1: z
+    .boolean({
+      message: "Kolom 1 harus berupa boolean (true/false)",
+    })
+    .optional(),
+  column_2: z
+    .boolean({
+      message: "Kolom 2 harus berupa boolean (true/false)",
+    })
+    .optional(),
+  column_1_title: z
+    .string({ message: "Judul kolom 1 wajib diisi" })
+    .min(1, "Minimal judul kolom 1 harus terdiri dari 1 karakter")
+    .max(100, "Maksimal judul kolom 1 adalah 100 karakter")
+    .optional(),
+  column_2_title: z
+    .string({ message: "Judul kolom 2 wajib diisi" })
+    .min(1, "Minimal judul kolom 2 harus terdiri dari 1 karakter")
+    .max(100, "Maksimal judul kolom 2 adalah 100 karakter")
+    .optional(),
+});
+
+export type UpdateCategoryPayload = z.infer<typeof updateCategorySchema>;
+export type UpdateCategoryPayloadService = Omit<
+  UpdateCategoryPayload,
+  "image" | "cover"
+> & {
+  id: string;
+  image_url: string | undefined;
+  cover_url: string | undefined;
+};

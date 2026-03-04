@@ -12,6 +12,7 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { Eye, MoreHorizontalIcon, PencilIcon } from "lucide-react";
 import DeleteCategory from "./_form/delete.category";
+import { UpdateCategory } from "./_form/update.category";
 
 export const columns = (params?: GetParams): ColumnDef<Category>[] => [
   {
@@ -99,9 +100,7 @@ export const columns = (params?: GetParams): ColumnDef<Category>[] => [
             <DropdownMenuItem>
               <Eye /> Lihat
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <PencilIcon /> Edit
-            </DropdownMenuItem>
+            <UpdateCategory category={row.original} params={params} />
             <DeleteCategory category={row.original} params={params} />
           </DropdownMenuContent>
         </DropdownMenu>

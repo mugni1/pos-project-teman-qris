@@ -1,5 +1,6 @@
 "use client";
 
+import { Category } from "@/@types/category.type";
 import { GetParams } from "@/@types/global.type";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -13,6 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import {
   Field,
   FieldContent,
@@ -28,80 +30,90 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCreateCategory } from "@/hooks/useCreateOrder";
+import { useUpdateCategory } from "@/hooks/useUpdateCategory";
 import { useUpload } from "@/hooks/useUpload";
 import {
-  CreateCategoryPayload,
-  CreateCategoryPayloadService,
-  createCategorySchema,
+  UpdateCategoryPayload,
+  UpdateCategoryPayloadService,
+  updateCategorySchema,
 } from "@/validator/category.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  LoaderIcon,
-  PlusCircleIcon,
-  SaveIcon,
-  XCircleIcon,
-} from "lucide-react";
+import { LoaderIcon, PenBoxIcon, SaveIcon, XCircleIcon } from "lucide-react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-export function CreateCategory({ getParams }: { getParams: GetParams }) {
+export function UpdateCategory({
+  params,
+  category,
+}: {
+  params?: GetParams;
+  category: Category;
+}) {
   // state
   const queryClient = useQueryClient();
-  const { mutateAsync: createMutate } = useCreateCategory();
+  const { mutateAsync: updateMutate } = useUpdateCategory();
   const { mutateAsync: uploadMutate } = useUpload();
   const [open, setOpen] = useState(false);
 
   // form
   const form = useForm({
-    resolver: zodResolver(createCategorySchema),
+    resolver: zodResolver(updateCategorySchema),
     defaultValues: {
-      column_1: true,
-      column_2: false,
-      column_1_title: "",
-      column_2_title: "Tidak ada judul",
-      studio: "",
-      title: "",
+      column_1: category.column_1,
+      column_2: category.column_2,
+      column_1_title: category.column_1_title,
+      column_2_title: category.column_2_title,
+      studio: category.studio,
+      title: category.title,
+      type: category.type as "bill" | "credit" | "quota" | "games" | undefined,
     },
   });
 
   // methods
-  const onSubmit = async (values: CreateCategoryPayload) => {
+  const onSubmit = async (values: UpdateCategoryPayload) => {
     try {
-      const imageUpload = await uploadMutate(values.image);
-      if (imageUpload.status !== 200 || !imageUpload.data?.url) {
-        toast.error(imageUpload.message || "Gagal upload gambar utama.");
-        return;
+      let image_url: string | undefined;
+      let cover_url: string | undefined;
+      if (values.image) {
+        const imageUpload = await uploadMutate(values.image);
+        if (imageUpload.status !== 200 || !imageUpload.data?.url) {
+          toast.error(imageUpload.message || "Gagal upload gambar utama.");
+          return;
+        }
+        image_url = imageUpload.data.url;
       }
 
-      const coverUpload = await uploadMutate(values.cover);
-      if (coverUpload.status !== 200 || !coverUpload.data?.url) {
-        toast.error(coverUpload.message || "Gagal upload gambar cover.");
-        return;
+      if (values.cover) {
+        const coverUpload = await uploadMutate(values.cover);
+        if (coverUpload.status !== 200 || !coverUpload.data?.url) {
+          toast.error(coverUpload.message || "Gagal upload gambar cover.");
+          return;
+        }
+        cover_url = coverUpload.data.url;
       }
-
-      const payload: CreateCategoryPayloadService = {
+      const payload: UpdateCategoryPayloadService = {
+        id: category.id,
         column_1: values.column_1,
         column_2: values.column_2,
         column_1_title: values.column_1_title,
         column_2_title: values.column_2_title,
-        cover_url: coverUpload.data.url,
-        image_url: imageUpload.data.url,
+        cover_url: cover_url,
+        image_url: image_url,
         studio: values.studio,
         title: values.title,
         type: values.type,
       };
 
-      const data = await createMutate(payload);
-      if (data.status != 201) {
+      const data = await updateMutate(payload);
+      if (data.status != 200) {
         toast.error(data.message);
       } else {
         form.reset();
         toast.success(data.message);
         await queryClient.invalidateQueries({
-          queryKey: ["useGetCategory", getParams],
+          queryKey: ["useGetCategory", params],
         });
         setOpen(false);
       }
@@ -114,9 +126,14 @@ export function CreateCategory({ getParams }: { getParams: GetParams }) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
-          <PlusCircleIcon /> Tambah Kategori
-        </Button>
+        <DropdownMenuItem
+          onSelect={(event) => {
+            event.preventDefault();
+            setOpen(true);
+          }}
+        >
+          <PenBoxIcon /> Update
+        </DropdownMenuItem>
       </DialogTrigger>
       <DialogContent
         className="font-sans"
@@ -124,11 +141,11 @@ export function CreateCategory({ getParams }: { getParams: GetParams }) {
       >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <PlusCircleIcon /> Tambah Kategori Baru
+            <PenBoxIcon /> Perbaharui Kategori
           </DialogTitle>
           <DialogDescription>
-            Lengkapi data kategori, lalu simpan untuk menambahkan kategori baru
-            ke sistem.
+            Perbaharui <strong>{category.title}</strong> dengan mengubah data,
+            lalu simpan untuk memperbaharui kategori ke sistem.
           </DialogDescription>
         </DialogHeader>
 
