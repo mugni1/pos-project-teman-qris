@@ -15,7 +15,7 @@ export default function Editor() {
       ["bold", "italic", "underline"],
       [{ color: [] }, { background: [] }],
       [{ list: "ordered" }, { list: "bullet" }],
-      ["link"],
+      ["link", "image"],
     ],
   };
 
