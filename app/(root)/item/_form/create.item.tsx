@@ -22,6 +22,11 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import {
   Select,
   SelectContent,
   SelectGroup,
@@ -256,14 +261,17 @@ export default function CreateItem({ getParams }: { getParams: GetParams }) {
             >
               <FieldLabel htmlFor="price">Harga</FieldLabel>
               <FieldContent>
-                <Input
-                  id="price"
-                  type="number"
-                  min={0}
-                  placeholder="Contoh: 20000"
-                  aria-invalid={!!form.formState.errors.price}
-                  {...form.register("price")}
-                />
+                <InputGroup>
+                  <InputGroupInput
+                    id="price"
+                    type="number"
+                    min={0}
+                    placeholder="1.000"
+                    aria-invalid={!!form.formState.errors.price}
+                    {...form.register("price")}
+                  />
+                  <InputGroupAddon>Rp</InputGroupAddon>
+                </InputGroup>
                 <FieldError errors={[form.formState.errors.price]} />
               </FieldContent>
             </Field>

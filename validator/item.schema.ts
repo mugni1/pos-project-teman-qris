@@ -40,7 +40,7 @@ export const createItemSchema = z.object({
   image: createImageSchema("Gambar"),
   price: z.coerce
     .number({ message: "Harga harus berupa angka" })
-    .min(1000, "Harga minimal adalah Rp 1000"),
+    .min(1000, "Harga minimal adalah Rp 1.000"),
   stock: z.coerce
     .number({ message: "Stok harus berupa angka" })
     .min(0, "Stok minimal adalah 0"),
