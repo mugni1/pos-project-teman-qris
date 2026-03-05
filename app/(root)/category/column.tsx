@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, MoreHorizontalIcon, PencilIcon } from "lucide-react";
+import { CopyIcon, Eye, MoreHorizontalIcon, PencilIcon } from "lucide-react";
 import DeleteCategory from "./_form/delete.category";
 import { UpdateCategory } from "./_form/update.category";
 
@@ -88,6 +88,8 @@ export const columns = (params?: GetParams): ColumnDef<Category>[] => [
     },
     enableSorting: false,
     cell: ({ row }) => {
+      const data = row.original;
+      const id = data.id;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -97,8 +99,8 @@ export const columns = (params?: GetParams): ColumnDef<Category>[] => [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="font-sans">
-            <DropdownMenuItem>
-              <Eye /> Lihat
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(id)}>
+              <CopyIcon /> Copy ID
             </DropdownMenuItem>
             <UpdateCategory category={row.original} params={params} />
             <DeleteCategory category={row.original} params={params} />
