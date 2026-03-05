@@ -117,7 +117,7 @@ export const createNewsServices = async (
 export const updateNewsServices = async (
   payload: UpdateNewsPayloadService,
 ): Promise<AxiosResponse<UpdateNewsResponse>> => {
-  return httpClient.put(`${ENDPOINT.NEWS}/${payload.id}`);
+  return httpClient.put(`${ENDPOINT.NEWS}/${payload.id}`, payload);
 };
 export const deleteNewsServices = async (
   id: string,
