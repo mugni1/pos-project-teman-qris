@@ -18,7 +18,12 @@ import {
   UpdateItemResponse,
 } from "@/@types/item.type";
 import { GetOrderResponse } from "@/@types/order.type";
-import { GetNewsResponse } from "@/@types/news.type";
+import {
+  CreateNewsResponse,
+  DeleteNewsResponse,
+  GetNewsResponse,
+  UpdateNewsResponse,
+} from "@/@types/news.type";
 import {
   CreateCategoryPayloadService,
   UpdateCategoryPayloadService,
@@ -28,6 +33,10 @@ import {
   CreateItemPayloadService,
   UpdateItemPayloadService,
 } from "@/validator/item.schema";
+import {
+  CreateNewsPayloadService,
+  UpdateNewsPayloadService,
+} from "@/validator/news.schema";
 
 export const uploadServices = async (
   file: File,
@@ -99,4 +108,19 @@ export const getNewsServices = async (
   params?: GetParams,
 ): Promise<AxiosResponse<GetNewsResponse>> => {
   return httpClient.get(ENDPOINT.NEWS, { params });
+};
+export const createNewsServices = async (
+  payload: CreateNewsPayloadService,
+): Promise<AxiosResponse<CreateNewsResponse>> => {
+  return httpClient.post(ENDPOINT.NEWS, payload);
+};
+export const updateNewsServices = async (
+  payload: UpdateNewsPayloadService,
+): Promise<AxiosResponse<UpdateNewsResponse>> => {
+  return httpClient.put(`${ENDPOINT.NEWS}/${payload.id}`);
+};
+export const deleteNewsServices = async (
+  id: string,
+): Promise<AxiosResponse<DeleteNewsResponse>> => {
+  return httpClient.delete(`${ENDPOINT.NEWS}/${id}`);
 };

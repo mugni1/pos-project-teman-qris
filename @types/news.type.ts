@@ -17,3 +17,27 @@ export interface GetNewsResponse {
   meta: Meta | null;
   errors: null;
 }
+
+export interface CreateNewsResponse {
+  status: HttpStatusCode;
+  message: string;
+  data: News | null;
+  meta: null;
+  errors: null;
+}
+
+export interface UpdateNewsResponse {
+  status: HttpStatusCode;
+  message: string;
+  data: News | null;
+  meta: null;
+  errors: null;
+}
+
+export interface DeleteNewsResponse {
+  status: HttpStatusCode;
+  message: string;
+  data: News | null;
+  meta: null;
+  errors: null;
+}
