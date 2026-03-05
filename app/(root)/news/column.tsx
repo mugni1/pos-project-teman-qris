@@ -43,9 +43,10 @@ export const columns: ColumnDef<News>[] = [
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <p className="w-64 truncate text-sm text-muted-foreground">
-          {data.content}
-        </p>
+        <div
+          className="prose max-w-none"
+          dangerouslySetInnerHTML={{ __html: data.content }}
+        />
       );
     },
   },

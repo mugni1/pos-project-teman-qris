@@ -1,13 +1,24 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { cn } from "@/lib/utils";
 import "react-quill-new/dist/quill.snow.css";
 
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
-export default function Editor() {
-  const [value, setValue] = useState("");
+interface EditorProps {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  "aria-invalid"?: boolean;
+}
+
+export default function Editor({
+  value,
+  onChange,
+  placeholder,
+  "aria-invalid": ariaInvalid,
+}: EditorProps) {
 
   const modules = {
     toolbar: [
@@ -20,12 +31,19 @@ export default function Editor() {
   };
 
   return (
-    <div className="rounded-lg border bg-background">
+    <div
+      className={cn(
+        "rounded-lg border bg-background overflow-hidden",
+        ariaInvalid ? "border-destructive" : "border-input",
+      )}
+      aria-invalid={ariaInvalid}
+    >
       <ReactQuill
         theme="snow"
         value={value}
-        onChange={setValue}
+        onChange={onChange}
         modules={modules}
+        placeholder={placeholder}
       />
     </div>
   );

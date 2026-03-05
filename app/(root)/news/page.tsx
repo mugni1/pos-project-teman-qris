@@ -2,10 +2,9 @@
 
 import { News } from "@/@types/news.type";
 import { columns } from "@/app/(root)/news/column";
+import CreateNews from "@/app/(root)/news/_form/create.news";
 import { DataTable } from "@/components/layout/data-table";
-import { Button } from "@/components/ui/button";
 import { useGetNews } from "@/hooks/useGetNews";
-import { PlusIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 export default function Page() {
@@ -55,10 +54,15 @@ export default function Page() {
         setPage("1");
       }}
       createSlot={
-        <Button type="button">
-          <PlusIcon className="size-4" />
-          Tambah News
-        </Button>
+        <CreateNews
+          getParams={{
+            search: searchDeb,
+            limit,
+            page,
+            order_by: orderBy,
+            sort_by: sortBy,
+          }}
+        />
       }
     />
   );
