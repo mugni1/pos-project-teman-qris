@@ -3,10 +3,9 @@
 import { Item } from "@/@types/item.type";
 import { columns } from "@/app/(root)/item/column";
 import { DataTable } from "@/components/layout/data-table";
-import { Button } from "@/components/ui/button";
 import { useGetItem } from "@/hooks/useGetItem";
-import { PlusIcon } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import CreateItem from "./_form/create.item";
 
 export default function Page() {
   const [search, setSearch] = useState("");
@@ -16,13 +15,15 @@ export default function Page() {
   const [orderBy, setOrderBy] = useState("created_at");
   const [sortBy, setSortBy] = useState<"asc" | "desc">("desc");
 
-  const { data, isPending } = useGetItem({
+  const params = {
     search: searchDeb,
     limit,
     page,
     order_by: orderBy,
     sort_by: sortBy,
-  });
+  };
+
+  const { data, isPending } = useGetItem(params);
 
   const items = useMemo<Item[]>(() => data?.data ?? [], [data?.data]);
 
@@ -54,12 +55,7 @@ export default function Page() {
         setSortBy(nextSortBy);
         setPage("1");
       }}
-      createSlot={
-        <Button type="button">
-          <PlusIcon className="size-4" />
-          Tambah Item
-        </Button>
-      }
+      createSlot={<CreateItem getParams={params} />}
     />
   );
 }

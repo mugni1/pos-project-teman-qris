@@ -22,3 +22,11 @@ export interface GetItemResponse {
   meta: Meta | null;
   errors: null;
 }
+
+export interface CreateItemResponse {
+  status: HttpStatusCode;
+  message: string;
+  data: Item | null;
+  meta: null;
+  errors: null;
+}
