@@ -30,3 +30,11 @@ export interface CreateItemResponse {
   meta: null;
   errors: null;
 }
+
+export interface UpdateItemResponse {
+  status: HttpStatusCode;
+  message: string;
+  data: Item | null;
+  meta: null;
+  errors: null;
+}

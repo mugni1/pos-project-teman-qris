@@ -11,7 +11,11 @@ import {
   GetCategoryResponse,
   UpdateCategoryResponse,
 } from "@/@types/category.type";
-import { CreateItemResponse, GetItemResponse } from "@/@types/item.type";
+import {
+  CreateItemResponse,
+  GetItemResponse,
+  UpdateItemResponse,
+} from "@/@types/item.type";
 import { GetOrderResponse } from "@/@types/order.type";
 import { GetNewsResponse } from "@/@types/news.type";
 import {
@@ -19,7 +23,10 @@ import {
   UpdateCategoryPayloadService,
 } from "@/validator/category.schema";
 import { UploadResponse } from "@/@types/upload.type";
-import { CreateItemPayloadService } from "@/validator/item.schema";
+import {
+  CreateItemPayloadService,
+  UpdateItemPayloadService,
+} from "@/validator/item.schema";
 
 export const uploadServices = async (
   file: File,
@@ -69,6 +76,11 @@ export const createItemServices = async (
   payload?: CreateItemPayloadService,
 ): Promise<AxiosResponse<CreateItemResponse>> => {
   return httpClient.post(ENDPOINT.ITEM, payload);
+};
+export const updateItemServices = async (
+  payload: UpdateItemPayloadService,
+): Promise<AxiosResponse<UpdateItemResponse>> => {
+  return httpClient.put(`${ENDPOINT.ITEM}/${payload.id}`, payload);
 };
 
 export const getOrderServices = async (

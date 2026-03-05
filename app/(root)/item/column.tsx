@@ -9,9 +9,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, MoreHorizontalIcon, PencilIcon, TrashIcon } from "lucide-react";
+import { CopyIcon, MoreHorizontalIcon } from "lucide-react";
+import UpdateItem from "./_form/update.item";
+import { GetParams } from "@/@types/global.type";
 
-export const columns: ColumnDef<Item>[] = [
+export const columns = (params?: GetParams): ColumnDef<Item>[] => [
   {
     accessorKey: "image_url",
     header: "Gambar",
@@ -83,7 +85,9 @@ export const columns: ColumnDef<Item>[] = [
       return <span>Tindakan</span>;
     },
     enableSorting: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const data = row.original;
+      const id = data.id;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -93,15 +97,10 @@ export const columns: ColumnDef<Item>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="font-sans">
-            <DropdownMenuItem>
-              <Eye /> Lihat
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(id)}>
+              <CopyIcon /> Copy ID
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <PencilIcon /> Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive">
-              <TrashIcon /> Hapus
-            </DropdownMenuItem>
+            <UpdateItem params={params} item={data} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

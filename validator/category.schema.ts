@@ -1,35 +1,7 @@
 import * as z from "zod";
+import { createImageSchema, updateImageSchema } from "./image.schema";
 
-const MAX_IMAGE_SIZE = 3 * 1024 * 1024; // 3MB
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-  "image/jfif",
-];
-
-const createImageSchema = (fieldLabel: string) =>
-  z.preprocess(
-    (value) => {
-      if (typeof FileList !== "undefined" && value instanceof FileList) {
-        return value.item(0);
-      }
-      return value;
-    },
-    z
-      .custom<File>(
-        (value) => typeof File !== "undefined" && value instanceof File,
-        { message: `${fieldLabel} wajib diisi` },
-      )
-      .refine((file) => file.size <= MAX_IMAGE_SIZE, {
-        message: `${fieldLabel} maksimal 3MB`,
-      })
-      .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
-        message: `${fieldLabel} harus berformat JPG, JPEG, PNG, atau WEBP`,
-      }),
-  );
-
+// Create
 export const createCategorySchema = z.object({
   title: z
     .string({ message: "Judul wajib diisi" })
@@ -59,7 +31,6 @@ export const createCategorySchema = z.object({
     .min(1, "Minimal judul kolom 2 harus terdiri dari 1 karakter")
     .max(100, "Maksimal judul kolom 2 adalah 100 karakter"),
 });
-
 export type CreateCategoryPayload = z.infer<typeof createCategorySchema>;
 export type CreateCategoryPayloadService = Omit<
   CreateCategoryPayload,
@@ -69,31 +40,7 @@ export type CreateCategoryPayloadService = Omit<
   cover_url: string;
 };
 
-const updateImageSchema = (fieldLabel: string) =>
-  z.preprocess(
-    (value) => {
-      if (typeof FileList !== "undefined" && value instanceof FileList) {
-        return value.length > 0 ? value.item(0) : undefined;
-      }
-      if (value === null || value === "") {
-        return undefined;
-      }
-      return value;
-    },
-    z
-      .custom<File>(
-        (value) => typeof File !== "undefined" && value instanceof File,
-        { message: `${fieldLabel} wajib diisi` },
-      )
-      .refine((file) => file.size <= MAX_IMAGE_SIZE, {
-        message: `${fieldLabel} maksimal 3MB`,
-      })
-      .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
-        message: `${fieldLabel} harus berformat JPG, JPEG, PNG, atau WEBP`,
-      })
-      .optional(),
-  );
-
+// Update
 export const updateCategorySchema = z.object({
   title: z
     .string({ message: "Judul wajib diisi" })
@@ -133,7 +80,6 @@ export const updateCategorySchema = z.object({
     .max(100, "Maksimal judul kolom 2 adalah 100 karakter")
     .optional(),
 });
-
 export type UpdateCategoryPayload = z.infer<typeof updateCategorySchema>;
 export type UpdateCategoryPayloadService = Omit<
   UpdateCategoryPayload,
