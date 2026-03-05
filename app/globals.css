@@ -124,3 +124,17 @@
     @apply bg-background text-foreground;
   }
 }
+
+.ql-toolbar {
+  border: none !important;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.ql-container {
+  border: none !important;
+  font-family: inherit;
+}
+
+.ql-editor {
+  min-height: 200px;
+}
