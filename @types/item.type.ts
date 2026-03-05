@@ -38,3 +38,11 @@ export interface UpdateItemResponse {
   meta: null;
   errors: null;
 }
+
+export interface DeleteItemResponse {
+  status: HttpStatusCode;
+  message: string;
+  data: Item | null;
+  meta: null;
+  errors: null;
+}

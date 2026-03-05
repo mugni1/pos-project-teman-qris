@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
 import { CopyIcon, MoreHorizontalIcon } from "lucide-react";
+import DeleteItem from "./_form/delete.item";
 import UpdateItem from "./_form/update.item";
 import { GetParams } from "@/@types/global.type";
 
@@ -101,6 +102,7 @@ export const columns = (params?: GetParams): ColumnDef<Item>[] => [
               <CopyIcon /> Copy ID
             </DropdownMenuItem>
             <UpdateItem params={params} item={data} />
+            <DeleteItem params={params} item={data} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

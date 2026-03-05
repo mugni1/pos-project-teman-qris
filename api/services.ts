@@ -13,6 +13,7 @@ import {
 } from "@/@types/category.type";
 import {
   CreateItemResponse,
+  DeleteItemResponse,
   GetItemResponse,
   UpdateItemResponse,
 } from "@/@types/item.type";
@@ -81,6 +82,11 @@ export const updateItemServices = async (
   payload: UpdateItemPayloadService,
 ): Promise<AxiosResponse<UpdateItemResponse>> => {
   return httpClient.put(`${ENDPOINT.ITEM}/${payload.id}`, payload);
+};
+export const deleteItemServices = async (
+  id: string,
+): Promise<AxiosResponse<DeleteItemResponse>> => {
+  return httpClient.delete(`${ENDPOINT.ITEM}/${id}`);
 };
 
 export const getOrderServices = async (
