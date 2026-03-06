@@ -1,5 +1,6 @@
 "use client";
 
+import { GetParams } from "@/@types/global.type";
 import { News } from "@/@types/news.type";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,9 +10,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { Eye, MoreHorizontalIcon, PencilIcon, TrashIcon } from "lucide-react";
+import { CopyIcon, MoreHorizontalIcon } from "lucide-react";
+import DeleteNews from "./_form/delete.news";
+import UpdateNews from "./_form/update.news";
 
-export const columns: ColumnDef<News>[] = [
+export const columns = (params?: GetParams): ColumnDef<News>[] => [
   {
     accessorKey: "image_url",
     header: "Gambar",
@@ -44,7 +47,7 @@ export const columns: ColumnDef<News>[] = [
       const data = row.original;
       return (
         <div
-          className="prose max-w-none"
+          className="prose max-w-60 line-clamp-4"
           dangerouslySetInnerHTML={{ __html: data.content }}
         />
       );
@@ -76,7 +79,9 @@ export const columns: ColumnDef<News>[] = [
       return <span>Tindakan</span>;
     },
     enableSorting: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const data = row.original;
+      const id = data.id;
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -86,15 +91,11 @@ export const columns: ColumnDef<News>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="font-sans">
-            <DropdownMenuItem>
-              <Eye /> Lihat
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(id)}>
+              <CopyIcon /> Copy ID
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <PencilIcon /> Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive">
-              <TrashIcon /> Hapus
-            </DropdownMenuItem>
+            <UpdateNews params={params} news={data} />
+            <DeleteNews params={params} news={data} />
           </DropdownMenuContent>
         </DropdownMenu>
       );

@@ -15,13 +15,14 @@ export default function Page() {
   const [orderBy, setOrderBy] = useState("created_at");
   const [sortBy, setSortBy] = useState<"asc" | "desc">("desc");
 
-  const { data, isPending } = useGetNews({
+  const params = {
     search: searchDeb,
     limit,
     page,
     order_by: orderBy,
     sort_by: sortBy,
-  });
+  };
+  const { data, isPending } = useGetNews(params);
 
   const news = useMemo<News[]>(() => data?.data ?? [], [data?.data]);
 
@@ -37,7 +38,7 @@ export default function Page() {
 
   return (
     <DataTable
-      columns={columns}
+      columns={columns(params)}
       data={news}
       isPending={isPending}
       search={search}
@@ -53,17 +54,7 @@ export default function Page() {
         setSortBy(nextSortBy);
         setPage("1");
       }}
-      createSlot={
-        <CreateNews
-          getParams={{
-            search: searchDeb,
-            limit,
-            page,
-            order_by: orderBy,
-            sort_by: sortBy,
-          }}
-        />
-      }
+      createSlot={<CreateNews getParams={params} />}
     />
   );
 }
