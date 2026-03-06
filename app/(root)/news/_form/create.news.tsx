@@ -5,6 +5,7 @@ import Editor from "@/components/layout/editor";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -29,7 +30,7 @@ import {
 } from "@/validator/news.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import { LoaderIcon, PlusIcon, SaveIcon } from "lucide-react";
+import { LoaderIcon, PlusIcon, SaveIcon, XCircleIcon } from "lucide-react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -83,7 +84,7 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          <PlusIcon className="size-4" /> Tambah News
+          <PlusIcon className="size-4" /> Tambah Berita
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -92,10 +93,10 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
       >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <PlusIcon className="size-4" /> Tambah News Baru
+            <PlusIcon className="size-4" /> Tambah Berita Baru
           </DialogTitle>
           <DialogDescription>
-            Lengkapi data berita, lalu simpan untuk menambahkan news baru ke
+            Lengkapi data berita, lalu simpan untuk menambahkan berita baru ke
             sistem.
           </DialogDescription>
         </DialogHeader>
@@ -164,6 +165,11 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
         </form>
 
         <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline">
+              <XCircleIcon /> Tutup
+            </Button>
+          </DialogClose>
           <Button
             type="submit"
             form="create-news-form"

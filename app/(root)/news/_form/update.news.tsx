@@ -111,11 +111,11 @@ export default function UpdateNews({
       >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <PenBoxIcon /> Perbaharui News
+            <PenBoxIcon /> Perbaharui Berita
           </DialogTitle>
           <DialogDescription>
             Perbaharui <strong>{news.title}</strong> dengan mengubah data, lalu
-            simpan untuk memperbaharui news ke sistem.
+            simpan untuk memperbaharui berita ke sistem.
           </DialogDescription>
         </DialogHeader>
 

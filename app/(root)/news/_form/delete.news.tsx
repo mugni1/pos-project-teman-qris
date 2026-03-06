@@ -61,10 +61,11 @@ export default function DeleteNews({
       <DialogContent className="font-sans">
         <DialogHeader className="text-destructive">
           <DialogTitle className="flex items-center gap-2">
-            <Trash2Icon /> Hapus News
+            <Trash2Icon /> Hapus Berita
           </DialogTitle>
           <DialogDescription>
-            News <strong>{news.title}</strong> akan dihapus permanen. Lanjutkan?
+            Berita <strong>{news.title}</strong> akan dihapus permanen.
+            Lanjutkan?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -78,7 +79,11 @@ export default function DeleteNews({
             variant="destructive"
             disabled={isPending}
           >
-            {isPending ? <LoaderIcon className="animate-spin" /> : <TrashIcon />}
+            {isPending ? (
+              <LoaderIcon className="animate-spin" />
+            ) : (
+              <TrashIcon />
+            )}
             {isPending ? <span> Harap Tunggu..</span> : <span>Hapus</span>}
           </Button>
         </DialogFooter>
