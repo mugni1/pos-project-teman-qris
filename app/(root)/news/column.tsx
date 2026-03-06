@@ -25,7 +25,7 @@ export const columns = (params?: GetParams): ColumnDef<News>[] => [
         <img
           src={data.image_url}
           alt={data.title}
-          className="aspect-square rounded-md w-15 object-cover"
+          className="aspect-video rounded-md w-60 object-cover bg-muted-foreground"
         />
       );
     },
@@ -36,7 +36,7 @@ export const columns = (params?: GetParams): ColumnDef<News>[] => [
     enableSorting: true,
     cell: ({ row }) => {
       const data = row.original;
-      return <div className="w-40 font-medium">{data.title}</div>;
+      return <div className="w-40 font-semibold ">{data.title}</div>;
     },
   },
   {
