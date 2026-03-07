@@ -57,6 +57,11 @@ const data = {
       icon: NewspaperIcon,
     },
     {
+      title: "Spanduk",
+      url: "/carousel",
+      icon: ImagePlayIcon,
+    },
+    {
       title: "Transaksi",
       url: "/transaction",
       icon: IconFolder,
@@ -65,11 +70,6 @@ const data = {
       title: "Akun",
       url: "/account",
       icon: IconUsers,
-    },
-    {
-      title: "Spanduk",
-      url: "/carousel",
-      icon: ImagePlayIcon,
     },
   ],
   navClouds: [
