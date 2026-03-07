@@ -26,7 +26,7 @@ export const columns = (params?: GetParams): ColumnDef<Category>[] => [
           <img
             src={data.image_url}
             alt={data.title}
-            className="bg-card-foreground aspect-square rounded-md h-20 "
+            className="bg-muted-foreground aspect-square rounded-md h-20 "
           />
         </div>
       );
@@ -43,7 +43,7 @@ export const columns = (params?: GetParams): ColumnDef<Category>[] => [
           <img
             src={data.cover_url}
             alt={data.title}
-            className="bg-card-foreground  rounded-md  w-full h-full object-cover object-center"
+            className="bg-muted-foreground rounded-md  w-full h-full object-cover object-center"
           />
         </div>
       );
