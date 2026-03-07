@@ -39,7 +39,7 @@ export default function Page() {
 
   return (
     <DataTable
-      columns={columns}
+      columns={columns(params)}
       data={carousels}
       isPending={isPending}
       search={search}

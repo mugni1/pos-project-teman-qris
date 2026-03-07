@@ -1,21 +1,32 @@
 "use client";
 
+import { GetParams } from "@/@types/global.type";
 import { Carousel } from "@/@types/carousel.type";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
+import { CopyIcon, MoreHorizontalIcon } from "lucide-react";
+import UpdateCarousel from "./_form/update.carousel";
 
-export const columns: ColumnDef<Carousel>[] = [
+export const columns = (params?: GetParams): ColumnDef<Carousel>[] => [
   {
     accessorKey: "image_url",
     header: "Gambar",
-    enableSorting: false,
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <img
-          src={data.image_url}
-          alt={data.title}
-          className="aspect-video rounded-md w-60 object-cover bg-muted-foreground"
-        />
+        <div className="w-60">
+          <img
+            src={data.image_url}
+            alt={data.title}
+            className="aspect-video rounded-md w-full object-cover bg-muted-foreground"
+          />
+        </div>
       );
     },
   },
@@ -31,7 +42,6 @@ export const columns: ColumnDef<Carousel>[] = [
   {
     accessorKey: "description",
     header: "Deskripsi",
-    enableSorting: false,
     cell: ({ row }) => {
       const data = row.original;
       return (
@@ -44,7 +54,6 @@ export const columns: ColumnDef<Carousel>[] = [
   {
     accessorKey: "link",
     header: "Tautan",
-    enableSorting: false,
     cell: ({ row }) => {
       const data = row.original;
       return (
@@ -87,6 +96,33 @@ export const columns: ColumnDef<Carousel>[] = [
             minute: "2-digit",
           })}
         </div>
+      );
+    },
+  },
+  {
+    id: "actions",
+    header: () => {
+      return <span>Tindakan</span>;
+    },
+    enableSorting: false,
+    cell: ({ row }) => {
+      const data = row.original;
+      const id = data.id;
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost">
+              <span className="sr-only">Open Menu</span>
+              <MoreHorizontalIcon className="size-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="font-sans">
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(id)}>
+              <CopyIcon /> Copy ID
+            </DropdownMenuItem>
+            <UpdateCarousel params={params} carousel={data} />
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
   },

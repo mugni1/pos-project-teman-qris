@@ -22,11 +22,13 @@ export const columns = (params?: GetParams): ColumnDef<News>[] => [
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <img
-          src={data.image_url}
-          alt={data.title}
-          className="aspect-video rounded-md w-60 object-cover bg-muted-foreground"
-        />
+        <div className="w-60">
+          <img
+            src={data.image_url}
+            alt={data.title}
+            className="aspect-video rounded-md w-full object-cover bg-muted-foreground"
+          />
+        </div>
       );
     },
   },
