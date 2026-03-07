@@ -32,7 +32,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { NewspaperIcon } from "lucide-react";
+import { ImagePlayIcon, NewspaperIcon } from "lucide-react";
 
 const data = {
   navMain: [
@@ -65,6 +65,11 @@ const data = {
       title: "Akun",
       url: "/account",
       icon: IconUsers,
+    },
+    {
+      title: "Spanduk",
+      url: "/carousel",
+      icon: ImagePlayIcon,
     },
   ],
   navClouds: [
