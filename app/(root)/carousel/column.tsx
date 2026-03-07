@@ -14,7 +14,7 @@ export const columns: ColumnDef<Carousel>[] = [
         <img
           src={data.image_url}
           alt={data.title}
-          className="aspect-video rounded-md w-15 object-cover"
+          className="aspect-video rounded-md w-60 object-cover bg-muted-foreground"
         />
       );
     },

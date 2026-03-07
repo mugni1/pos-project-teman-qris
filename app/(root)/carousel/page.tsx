@@ -1,6 +1,7 @@
 "use client";
 
 import { Carousel } from "@/@types/carousel.type";
+import CreateCarousel from "@/app/(root)/carousel/_form/create.carousel";
 import { columns } from "@/app/(root)/carousel/column";
 import { DataTable } from "@/components/layout/data-table";
 import { useGetCarousel } from "@/hooks/useGetCarousel";
@@ -54,6 +55,7 @@ export default function Page() {
         setSortBy(nextSortBy);
         setPage("1");
       }}
+      createSlot={<CreateCarousel getParams={params} />}
     />
   );
 }
