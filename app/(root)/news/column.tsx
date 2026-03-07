@@ -38,7 +38,7 @@ export const columns = (params?: GetParams): ColumnDef<News>[] => [
     enableSorting: true,
     cell: ({ row }) => {
       const data = row.original;
-      return <div className="w-40 font-semibold ">{data.title}</div>;
+      return <div className="w-40 font-medium">{data.title}</div>;
     },
   },
   {
@@ -57,11 +57,31 @@ export const columns = (params?: GetParams): ColumnDef<News>[] => [
   },
   {
     accessorKey: "created_at",
-    header: "Tanggal",
+    header: "Tanggal Dibuat",
     enableSorting: true,
     cell: ({ row }) => {
       const data = row.original;
       const date = new Date(data.created_at);
+      return (
+        <div className="w-44 text-sm">
+          {date.toLocaleString("id-ID", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "updated_at",
+    header: "Tanggal Diperbaharui",
+    enableSorting: true,
+    cell: ({ row }) => {
+      const data = row.original;
+      const date = new Date(data.updated_at);
       return (
         <div className="w-44 text-sm">
           {date.toLocaleString("id-ID", {
