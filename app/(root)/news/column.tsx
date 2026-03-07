@@ -49,7 +49,7 @@ export const columns = (params?: GetParams): ColumnDef<News>[] => [
       const data = row.original;
       return (
         <div
-          className="prose max-w-60 line-clamp-4"
+          className="prose text-muted-foreground max-w-60 line-clamp-4"
           dangerouslySetInnerHTML={{ __html: data.content }}
         />
       );
