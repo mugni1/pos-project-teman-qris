@@ -115,11 +115,11 @@ export default function UpdateCarousel({
       >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <PenBoxIcon /> Perbaharui Carousel
+            <PenBoxIcon /> Perbaharui Spanduk
           </DialogTitle>
           <DialogDescription>
             Perbaharui <strong>{carousel.title}</strong> dengan mengubah data,
-            lalu simpan untuk memperbaharui carousel ke sistem.
+            lalu simpan untuk memperbaharui spanduk ke sistem.
           </DialogDescription>
         </DialogHeader>
 
@@ -161,7 +161,10 @@ export default function UpdateCarousel({
               </FieldContent>
             </Field>
 
-            <Field className="gap-2" data-invalid={!!form.formState.errors.link}>
+            <Field
+              className="gap-2"
+              data-invalid={!!form.formState.errors.link}
+            >
               <FieldLabel htmlFor="link">Tautan</FieldLabel>
               <FieldContent>
                 <Input

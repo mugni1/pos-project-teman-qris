@@ -91,7 +91,7 @@ export default function CreateCarousel({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          <PlusCircleIcon /> Tambah Carousel
+          <PlusCircleIcon /> Tambah Spanduk
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -100,11 +100,11 @@ export default function CreateCarousel({
       >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <PlusCircleIcon /> Tambah Carousel Baru
+            <PlusCircleIcon /> Tambah Spanduk Baru
           </DialogTitle>
           <DialogDescription>
-            Lengkapi data carousel, lalu simpan untuk menambahkan carousel baru
-            ke sistem.
+            Lengkapi data spanduk, lalu simpan untuk menambahkan spanduk baru ke
+            sistem.
           </DialogDescription>
         </DialogHeader>
 
@@ -146,7 +146,10 @@ export default function CreateCarousel({
               </FieldContent>
             </Field>
 
-            <Field className="gap-2" data-invalid={!!form.formState.errors.link}>
+            <Field
+              className="gap-2"
+              data-invalid={!!form.formState.errors.link}
+            >
               <FieldLabel htmlFor="link">Tautan</FieldLabel>
               <FieldContent>
                 <Input
