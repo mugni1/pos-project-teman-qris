@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
 import { CopyIcon, MoreHorizontalIcon } from "lucide-react";
+import DeleteCarousel from "./_form/delete.carousel";
 import UpdateCarousel from "./_form/update.carousel";
 
 export const columns = (params?: GetParams): ColumnDef<Carousel>[] => [
@@ -142,6 +143,7 @@ export const columns = (params?: GetParams): ColumnDef<Carousel>[] => [
               <CopyIcon /> Copy ID
             </DropdownMenuItem>
             <UpdateCarousel params={params} carousel={data} />
+            <DeleteCarousel params={params} carousel={data} />
           </DropdownMenuContent>
         </DropdownMenu>
       );
