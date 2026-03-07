@@ -68,17 +68,7 @@ export const columns = (params?: GetParams): ColumnDef<Carousel>[] => [
       );
     },
   },
-  {
-    accessorKey: "is_active",
-    header: "Status",
-    enableSorting: true,
-    cell: ({ row }) => {
-      const data = row.original;
-      return (
-        <div className="w-20">{data.is_active ? "Aktif" : "Nonaktif"}</div>
-      );
-    },
-  },
+
   {
     accessorKey: "created_at",
     header: "Tanggal Dibuat",
@@ -96,6 +86,37 @@ export const columns = (params?: GetParams): ColumnDef<Carousel>[] => [
             minute: "2-digit",
           })}
         </div>
+      );
+    },
+  },
+  {
+    accessorKey: "updated_at",
+    header: "Tanggal Diperbaharui",
+    enableSorting: true,
+    cell: ({ row }) => {
+      const data = row.original;
+      const date = new Date(data.updated_at);
+      return (
+        <div className="w-44 text-sm">
+          {date.toLocaleString("id-ID", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "is_active",
+    header: "Status",
+    enableSorting: true,
+    cell: ({ row }) => {
+      const data = row.original;
+      return (
+        <div className="w-20">{data.is_active ? "Aktif" : "Nonaktif"}</div>
       );
     },
   },
