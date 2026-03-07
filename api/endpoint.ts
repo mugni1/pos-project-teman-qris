@@ -7,4 +7,5 @@ export const ENDPOINT = {
   ITEM: `/item`,
   CATEGORY: `/category`,
   UPLOAD: `/upload`,
+  CAROUSEL: `/carousel`,
 };

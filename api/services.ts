@@ -25,6 +25,12 @@ import {
   UpdateNewsResponse,
 } from "@/@types/news.type";
 import {
+  CreateCarouselResponse,
+  DeleteCarouselResponse,
+  GetCarouselResponse,
+  UpdateCarouselResponse,
+} from "@/@types/carousel.type";
+import {
   CreateCategoryPayloadService,
   UpdateCategoryPayloadService,
 } from "@/validator/category.schema";
@@ -37,6 +43,10 @@ import {
   CreateNewsPayloadService,
   UpdateNewsPayloadService,
 } from "@/validator/news.schema";
+import {
+  CreateCarouselPayloadService,
+  UpdateCarouselPayloadService,
+} from "@/validator/carousel.schema";
 
 export const uploadServices = async (
   file: File,
@@ -123,4 +133,25 @@ export const deleteNewsServices = async (
   id: string,
 ): Promise<AxiosResponse<DeleteNewsResponse>> => {
   return httpClient.delete(`${ENDPOINT.NEWS}/${id}`);
+};
+
+export const getCarouselServices = async (
+  params?: GetParams,
+): Promise<AxiosResponse<GetCarouselResponse>> => {
+  return httpClient.get(ENDPOINT.CAROUSEL, { params });
+};
+export const createCarouselServices = async (
+  payload: CreateCarouselPayloadService,
+): Promise<AxiosResponse<CreateCarouselResponse>> => {
+  return httpClient.post(ENDPOINT.CAROUSEL, payload);
+};
+export const updateCarouselServices = async (
+  payload: UpdateCarouselPayloadService,
+): Promise<AxiosResponse<UpdateCarouselResponse>> => {
+  return httpClient.put(`${ENDPOINT.CAROUSEL}/${payload.id}`, payload);
+};
+export const deleteCarouselServices = async (
+  id: string,
+): Promise<AxiosResponse<DeleteCarouselResponse>> => {
+  return httpClient.delete(`${ENDPOINT.CAROUSEL}/${id}`);
 };
