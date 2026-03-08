@@ -47,6 +47,7 @@ import {
   CreateCarouselPayloadService,
   UpdateCarouselPayloadService,
 } from "@/validator/carousel.schema";
+import { GetUserResponse } from "@/@types/user.type";
 
 export const uploadServices = async (
   file: File,
@@ -154,4 +155,10 @@ export const deleteCarouselServices = async (
   id: string,
 ): Promise<AxiosResponse<DeleteCarouselResponse>> => {
   return httpClient.delete(`${ENDPOINT.CAROUSEL}/${id}`);
+};
+
+export const getUserServices = async (
+  params?: GetParams,
+): Promise<AxiosResponse<GetUserResponse>> => {
+  return httpClient.get(ENDPOINT.USER, { params });
 };

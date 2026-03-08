@@ -8,4 +8,5 @@ export const ENDPOINT = {
   CATEGORY: `/category`,
   UPLOAD: `/upload`,
   CAROUSEL: `/carousel`,
+  USER: `/user`,
 };
