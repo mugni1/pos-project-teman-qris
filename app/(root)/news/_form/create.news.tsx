@@ -36,7 +36,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import {
   LoaderIcon,
   PlusCircleIcon,
-  PlusIcon,
   SaveIcon,
   SparklesIcon,
   XCircleIcon,
@@ -130,7 +129,7 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          <PlusIcon className="size-4" /> Tambah Berita
+          <PlusCircleIcon /> Tambah Berita
         </Button>
       </DialogTrigger>
       <DialogContent
@@ -182,6 +181,23 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
 
             <Field
               className="gap-2"
+              data-invalid={!!form.formState.errors.image}
+            >
+              <FieldLabel htmlFor="image">Gambar Utama</FieldLabel>
+              <FieldContent>
+                <Input
+                  id="image"
+                  type="file"
+                  accept="image/*"
+                  aria-invalid={!!form.formState.errors.image}
+                  {...form.register("image")}
+                />
+                <FieldError errors={[form.formState.errors.image]} />
+              </FieldContent>
+            </Field>
+
+            <Field
+              className="gap-2"
               data-invalid={!!form.formState.errors.title}
             >
               <FieldLabel htmlFor="title">Judul</FieldLabel>
@@ -209,23 +225,6 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
                   {...form.register("summary")}
                 />
                 <FieldError errors={[form.formState.errors.summary]} />
-              </FieldContent>
-            </Field>
-
-            <Field
-              className="gap-2"
-              data-invalid={!!form.formState.errors.image}
-            >
-              <FieldLabel htmlFor="image">Gambar Utama</FieldLabel>
-              <FieldContent>
-                <Input
-                  id="image"
-                  type="file"
-                  accept="image/*"
-                  aria-invalid={!!form.formState.errors.image}
-                  {...form.register("image")}
-                />
-                <FieldError errors={[form.formState.errors.image]} />
               </FieldContent>
             </Field>
 
