@@ -48,6 +48,8 @@ import {
   UpdateCarouselPayloadService,
 } from "@/validator/carousel.schema";
 import { GetUserResponse } from "@/@types/user.type";
+import { GenerateNewsResponse } from "@/@types/gemini.type";
+import { GenerateNewsPayload } from "@/validator/gemini.schema";
 
 export const uploadServices = async (
   file: File,
@@ -119,6 +121,11 @@ export const getNewsServices = async (
   params?: GetParams,
 ): Promise<AxiosResponse<GetNewsResponse>> => {
   return httpClient.get(ENDPOINT.NEWS, { params });
+};
+export const generateNewsServices = async (
+  payload: GenerateNewsPayload,
+): Promise<AxiosResponse<GenerateNewsResponse>> => {
+  return httpClient.post(ENDPOINT.GEMINI + "/news", payload);
 };
 export const createNewsServices = async (
   payload: CreateNewsPayloadService,

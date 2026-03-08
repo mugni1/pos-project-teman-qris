@@ -22,7 +22,9 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useCreateNews } from "@/hooks/useCreateNews";
+import { useGenerateNews } from "@/hooks/useGenerateNews";
 import { useUpload } from "@/hooks/useUpload";
+import { generateNewsSchema } from "@/validator/gemini.schema";
 import {
   CreateNewsPayload,
   CreateNewsPayloadService,
@@ -35,6 +37,7 @@ import {
   PlusCircleIcon,
   PlusIcon,
   SaveIcon,
+  SparklesIcon,
   XCircleIcon,
 } from "lucide-react";
 import { useState } from "react";
@@ -44,8 +47,11 @@ import { toast } from "sonner";
 export default function CreateNews({ getParams }: { getParams: GetParams }) {
   const queryClient = useQueryClient();
   const { mutateAsync: createMutate } = useCreateNews();
+  const { mutateAsync: generateMutate, isPending: isGeneratePending } =
+    useGenerateNews();
   const { mutateAsync: uploadMutate } = useUpload();
   const [open, setOpen] = useState(false);
+  const [topic, setTopic] = useState("");
 
   const form = useForm({
     resolver: zodResolver(createNewsSchema),
@@ -86,6 +92,37 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
     }
   };
 
+  const onGenerateNews = async () => {
+    const parsed = generateNewsSchema.safeParse({ topic });
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Topik tidak valid.");
+      return;
+    }
+
+    try {
+      const data = await generateMutate({ topic });
+      if (data.status !== 201 || !data.data) {
+        toast.error(data.message || "Gagal generate berita.");
+        return;
+      }
+
+      form.setValue("title", data.data.title, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      form.setValue("content", data.data.content, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+
+      toast.success(
+        "Berita berhasil digenerate. Silakan review sebelum simpan.",
+      );
+    } catch {
+      toast.error("Server sedang sibuk, coba lagi nanti.");
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -113,6 +150,33 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
           className="space-y-5 -mx-4 no-scrollbar max-h-[50vh] overflow-y-auto px-4"
         >
           <FieldGroup className="gap-4">
+            <Field className="gap-2">
+              <FieldLabel htmlFor="topic">Generate dengan AI</FieldLabel>
+              <FieldContent>
+                <div className="flex gap-2">
+                  <Input
+                    id="topic"
+                    placeholder="Contoh: Dampak promo ramadhan untuk UMKM"
+                    value={topic}
+                    onChange={(event) => setTopic(event.target.value)}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isGeneratePending}
+                    onClick={onGenerateNews}
+                  >
+                    {isGeneratePending ? (
+                      <LoaderIcon className="animate-spin" />
+                    ) : (
+                      <SparklesIcon />
+                    )}
+                    {isGeneratePending ? "Generate..." : "Generate"}
+                  </Button>
+                </div>
+              </FieldContent>
+            </Field>
+
             <Field
               className="gap-2"
               data-invalid={!!form.formState.errors.title}

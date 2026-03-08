@@ -9,4 +9,5 @@ export const ENDPOINT = {
   UPLOAD: `/upload`,
   CAROUSEL: `/carousel`,
   USER: `/user`,
+  GEMINI: `/gemini`,
 };

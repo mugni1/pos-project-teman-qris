@@ -48,10 +48,12 @@ export const columns = (params?: GetParams): ColumnDef<News>[] => [
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <div
-          className="prose text-muted-foreground max-w-60 line-clamp-4"
-          dangerouslySetInnerHTML={{ __html: data.content }}
-        />
+        <div className="w-70 line-clamp-4">
+          <span
+            className="text-muted-foreground  "
+            dangerouslySetInnerHTML={{ __html: data.content }}
+          />
+        </div>
       );
     },
   },
