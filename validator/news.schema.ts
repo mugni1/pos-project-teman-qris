@@ -8,6 +8,10 @@ export const createNewsSchema = z.object({
     .string({ message: "Judul wajib diisi" })
     .min(3, "Minimal judul harus terdiri dari 3 karakter")
     .max(150, "Maksimal judul adalah 150 karakter"),
+  summary: z
+    .string({ message: "Ringkasan wajib diisi" })
+    .min(10, "Minimal ringkasan harus terdiri dari 10 karakter")
+    .max(5000, "Maksimal ringkasan adalah 5000 karakter"),
   content: z
     .string({ message: "Konten wajib diisi" })
     .min(10, "Minimal konten harus terdiri dari 10 karakter")
@@ -25,6 +29,11 @@ export const updateNewsSchema = z.object({
     .string({ message: "Judul wajib diisi" })
     .min(3, "Minimal judul harus terdiri dari 3 karakter")
     .max(150, "Maksimal judul adalah 150 karakter")
+    .optional(),
+  summary: z
+    .string({ message: "Ringkasan wajib diisi" })
+    .min(10, "Minimal ringkasan harus terdiri dari 10 karakter")
+    .max(5000, "Maksimal ringkasan adalah 5000 karakter")
     .optional(),
   content: z
     .string({ message: "Konten wajib diisi" })

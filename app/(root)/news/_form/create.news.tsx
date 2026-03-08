@@ -21,6 +21,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { useCreateNews } from "@/hooks/useCreateNews";
 import { useGenerateNews } from "@/hooks/useGenerateNews";
 import { useUpload } from "@/hooks/useUpload";
@@ -58,6 +59,7 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
     defaultValues: {
       title: "",
       content: "",
+      summary: "",
     },
   });
 
@@ -73,6 +75,7 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
         image_url: imageUpload.data.url,
         title: values.title,
         content: values.content,
+        summary: values.summary,
       };
 
       const data = await createMutate(payload);
@@ -100,12 +103,11 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
     }
 
     try {
-      const data = await generateMutate({ topic });
+      const data = await generateMutate(parsed.data);
       if (data.status !== 201 || !data.data) {
         toast.error(data.message || "Gagal generate berita.");
         return;
       }
-
       form.setValue("title", data.data.title, {
         shouldDirty: true,
         shouldValidate: true,
@@ -114,10 +116,11 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
         shouldDirty: true,
         shouldValidate: true,
       });
-
-      toast.success(
-        "Berita berhasil digenerate. Silakan review sebelum simpan.",
-      );
+      form.setValue("summary", data.data.summary, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      toast.success("Berita berhasil dibuat. Silakan review sebelum simpan.");
     } catch {
       toast.error("Server sedang sibuk, coba lagi nanti.");
     }
@@ -190,6 +193,22 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
                   {...form.register("title")}
                 />
                 <FieldError errors={[form.formState.errors.title]} />
+              </FieldContent>
+            </Field>
+
+            <Field
+              className="gap-2"
+              data-invalid={!!form.formState.errors.summary}
+            >
+              <FieldLabel htmlFor="summary">Ringkasan</FieldLabel>
+              <FieldContent>
+                <Textarea
+                  id="summary"
+                  placeholder="Tulis ringkasan disini..."
+                  aria-invalid={!!form.formState.errors.summary}
+                  {...form.register("summary")}
+                />
+                <FieldError errors={[form.formState.errors.summary]} />
               </FieldContent>
             </Field>
 
