@@ -151,7 +151,7 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
         >
           <FieldGroup className="gap-4">
             <Field className="gap-2">
-              <FieldLabel htmlFor="topic">Generate dengan AI</FieldLabel>
+              <FieldLabel htmlFor="topic">Buat dengan AI </FieldLabel>
               <FieldContent>
                 <div className="flex gap-2">
                   <Input
@@ -171,7 +171,7 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
                     ) : (
                       <SparklesIcon />
                     )}
-                    {isGeneratePending ? "Generate..." : "Generate"}
+                    {isGeneratePending ? "Tunggu..." : "Buat"}
                   </Button>
                 </div>
               </FieldContent>

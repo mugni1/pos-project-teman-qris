@@ -38,7 +38,11 @@ export const columns = (params?: GetParams): ColumnDef<News>[] => [
     enableSorting: true,
     cell: ({ row }) => {
       const data = row.original;
-      return <div className="w-40 font-medium">{data.title}</div>;
+      return (
+        <div className="font-medium w-50">
+          <p className="wrap-break-word  whitespace-normal">{data.title}</p>
+        </div>
+      );
     },
   },
   {
@@ -48,9 +52,9 @@ export const columns = (params?: GetParams): ColumnDef<News>[] => [
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <div className="w-70 line-clamp-4">
+        <div className="w-70 text-xs">
           <span
-            className="text-muted-foreground  "
+            className="text-muted-foreground wrap-break-word whitespace-normal line-clamp-8"
             dangerouslySetInnerHTML={{ __html: data.content }}
           />
         </div>
