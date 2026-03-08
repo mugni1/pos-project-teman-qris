@@ -23,8 +23,11 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useGenerateNews } from "@/hooks/useGenerateNews";
 import { useUpdateNews } from "@/hooks/useUpdateNews";
 import { useUpload } from "@/hooks/useUpload";
+import { generateNewsSchema } from "@/validator/gemini.schema";
 import {
   UpdateNewsPayload,
   UpdateNewsPayloadService,
@@ -32,7 +35,13 @@ import {
 } from "@/validator/news.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import { LoaderIcon, PenBoxIcon, SaveIcon, XCircleIcon } from "lucide-react";
+import {
+  LoaderIcon,
+  PenBoxIcon,
+  SaveIcon,
+  SparklesIcon,
+  XCircleIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -46,13 +55,17 @@ export default function UpdateNews({
 }) {
   const queryClient = useQueryClient();
   const { mutateAsync: updateMutate } = useUpdateNews();
+  const { mutateAsync: generateMutate, isPending: isGeneratePending } =
+    useGenerateNews();
   const { mutateAsync: uploadMutate } = useUpload();
   const [open, setOpen] = useState(false);
+  const [topic, setTopic] = useState("");
 
   const form = useForm({
     resolver: zodResolver(updateNewsSchema),
     defaultValues: {
       title: news.title,
+      summary: news.summary,
       content: news.content,
     },
   });
@@ -73,6 +86,7 @@ export default function UpdateNews({
         id: news.id,
         image_url,
         title: values.title,
+        summary: values.summary,
         content: values.content,
       };
 
@@ -88,6 +102,39 @@ export default function UpdateNews({
         queryKey: ["useGetNews", params],
       });
       setOpen(false);
+    } catch {
+      toast.error("Server sedang sibuk, coba lagi nanti.");
+    }
+  };
+
+  const onGenerateNews = async () => {
+    const parsed = generateNewsSchema.safeParse({ topic });
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Topik tidak valid.");
+      return;
+    }
+
+    try {
+      const data = await generateMutate(parsed.data);
+      if (data.status !== 201 || !data.data) {
+        toast.error(data.message || "Gagal generate berita.");
+        return;
+      }
+
+      form.setValue("title", data.data.title, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      form.setValue("summary", data.data.summary, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      form.setValue("content", data.data.content, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+
+      toast.success("Berita berhasil dibuat. Silakan review sebelum simpan.");
     } catch {
       toast.error("Server sedang sibuk, coba lagi nanti.");
     }
@@ -125,6 +172,50 @@ export default function UpdateNews({
           className="space-y-5 -mx-4 no-scrollbar max-h-[50vh] overflow-y-auto px-4"
         >
           <FieldGroup className="gap-4">
+            <Field className="gap-2">
+              <FieldLabel htmlFor="topic">Buat dengan AI</FieldLabel>
+              <FieldContent>
+                <div className="flex gap-2">
+                  <Input
+                    id="topic"
+                    placeholder="Contoh: Dampak promo ramadhan untuk UMKM"
+                    value={topic}
+                    onChange={(event) => setTopic(event.target.value)}
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    disabled={isGeneratePending}
+                    onClick={onGenerateNews}
+                  >
+                    {isGeneratePending ? (
+                      <LoaderIcon className="animate-spin" />
+                    ) : (
+                      <SparklesIcon />
+                    )}
+                    {isGeneratePending ? "Tunggu..." : "Buat"}
+                  </Button>
+                </div>
+              </FieldContent>
+            </Field>
+
+            <Field
+              className="gap-2"
+              data-invalid={!!form.formState.errors.image}
+            >
+              <FieldLabel htmlFor="image">Gambar Utama</FieldLabel>
+              <FieldContent>
+                <Input
+                  id="image"
+                  type="file"
+                  accept="image/*"
+                  aria-invalid={!!form.formState.errors.image}
+                  {...form.register("image")}
+                />
+                <FieldError errors={[form.formState.errors.image]} />
+              </FieldContent>
+            </Field>
+
             <Field
               className="gap-2"
               data-invalid={!!form.formState.errors.title}
@@ -143,18 +234,17 @@ export default function UpdateNews({
 
             <Field
               className="gap-2"
-              data-invalid={!!form.formState.errors.image}
+              data-invalid={!!form.formState.errors.summary}
             >
-              <FieldLabel htmlFor="image">Gambar Utama</FieldLabel>
+              <FieldLabel htmlFor="summary">Ringkasan</FieldLabel>
               <FieldContent>
-                <Input
-                  id="image"
-                  type="file"
-                  accept="image/*"
-                  aria-invalid={!!form.formState.errors.image}
-                  {...form.register("image")}
+                <Textarea
+                  id="summary"
+                  placeholder="Tulis ringkasan disini..."
+                  aria-invalid={!!form.formState.errors.summary}
+                  {...form.register("summary")}
                 />
-                <FieldError errors={[form.formState.errors.image]} />
+                <FieldError errors={[form.formState.errors.summary]} />
               </FieldContent>
             </Field>
 
