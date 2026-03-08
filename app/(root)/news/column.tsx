@@ -46,6 +46,22 @@ export const columns = (params?: GetParams): ColumnDef<News>[] => [
     },
   },
   {
+    accessorKey: "summary",
+    header: "Ringkasan",
+    enableSorting: false,
+    cell: ({ row }) => {
+      const data = row.original;
+      return (
+        <div className="w-70 text-xs">
+          <span
+            className="text-muted-foreground wrap-break-word whitespace-normal line-clamp-8"
+            dangerouslySetInnerHTML={{ __html: data.summary }}
+          />
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "content",
     header: "Konten",
     enableSorting: false,

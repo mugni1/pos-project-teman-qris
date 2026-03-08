@@ -6,6 +6,7 @@ export interface News {
   image_url: string;
   title: string;
   content: string;
+  summary: string;
   created_at: string;
   updated_at: string;
 }
