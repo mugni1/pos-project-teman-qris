@@ -30,7 +30,13 @@ import {
 } from "@/validator/news.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQueryClient } from "@tanstack/react-query";
-import { LoaderIcon, PlusIcon, SaveIcon, XCircleIcon } from "lucide-react";
+import {
+  LoaderIcon,
+  PlusCircleIcon,
+  PlusIcon,
+  SaveIcon,
+  XCircleIcon,
+} from "lucide-react";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -93,7 +99,7 @@ export default function CreateNews({ getParams }: { getParams: GetParams }) {
       >
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <PlusIcon className="size-4" /> Tambah Berita Baru
+            <PlusCircleIcon /> Tambah Berita Baru
           </DialogTitle>
           <DialogDescription>
             Lengkapi data berita, lalu simpan untuk menambahkan berita baru ke
