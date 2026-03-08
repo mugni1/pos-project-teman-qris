@@ -1,5 +1,5 @@
-import { GetParams } from "@/@types/global.type";
 import { GetUserResponse } from "@/@types/user.type";
+import { GetParams } from "@/@types/global.type";
 import { getUserServices } from "@/api/services";
 import { handleErrorResponse } from "@/lib/handler";
 import { useQuery } from "@tanstack/react-query";
