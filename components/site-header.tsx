@@ -13,6 +13,7 @@ const routeTitle: Record<string, string> = {
   "/news": "Berita",
   "/transaction": "Transaksi",
   "/carousel": "Spanduk",
+  "/account": "Akun",
 };
 
 export function SiteHeader() {
