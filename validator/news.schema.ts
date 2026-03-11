@@ -15,7 +15,7 @@ export const createNewsSchema = z.object({
   content: z
     .string({ message: "Konten wajib diisi" })
     .min(10, "Minimal konten harus terdiri dari 10 karakter")
-    .max(10000, "Maksimal konten adalah 10000 karakter"),
+    .max(100000, "Maksimal konten adalah 100000 karakter"),
 });
 export type CreateNewsPayload = z.infer<typeof createNewsSchema>;
 export type CreateNewsPayloadService = Omit<CreateNewsPayload, "image"> & {
@@ -38,7 +38,7 @@ export const updateNewsSchema = z.object({
   content: z
     .string({ message: "Konten wajib diisi" })
     .min(10, "Minimal konten harus terdiri dari 10 karakter")
-    .max(10000, "Maksimal konten adalah 1000 karakter")
+    .max(100000, "Maksimal konten adalah 100000 karakter")
     .optional(),
 });
 export type UpdateNewsPayload = z.infer<typeof updateNewsSchema>;
