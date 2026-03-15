@@ -72,7 +72,7 @@ export const columns = (params?: GetParams): ColumnDef<Category>[] => [
       const data = row.original;
       return (
         <div className="capitalize w-30">
-          {data.type == "credit_and_quota" && "Pulsa & Kuota"}
+          {data.type == "credit_quota" && "Pulsa & Kuota"}
           {data.type == "credit" && "Pulsa"}
           {data.type == "quota" && "Kuota"}
           {data.type == "games" && "Permainan"}

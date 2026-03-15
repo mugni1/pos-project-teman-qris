@@ -206,8 +206,9 @@ export function CreateCategory({ getParams }: { getParams: GetParams }) {
                         <SelectValue placeholder="Pilih tipe" />
                       </SelectTrigger>
                       <SelectContent className="font-sans">
-                        <SelectItem value="credit">Pulsa</SelectItem>
-                        <SelectItem value="quota">Kuota</SelectItem>
+                        <SelectItem value="credit_quota">
+                          Pulsa & Kuota
+                        </SelectItem>
                         <SelectItem value="games">Permainan</SelectItem>
                         <SelectItem value="bill">Tagihan</SelectItem>
                       </SelectContent>

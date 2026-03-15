@@ -13,7 +13,7 @@ export const createCategorySchema = z.object({
     .max(50, "Maksimal studio adalah 50 karakter"),
   image: createImageSchema("Gambar utama"),
   cover: createImageSchema("Gambar cover"),
-  type: z.enum(["credit", "quota", "games", "bill"], {
+  type: z.enum(["credit", "quota", "games", "bill", "credit_quota"], {
     message: "Tipe harus salah satu dari: pulsa, kuota, permainan, tagihan",
   }),
   column_1: z.boolean({
@@ -55,7 +55,7 @@ export const updateCategorySchema = z.object({
   image: updateImageSchema("Gambar utama"),
   cover: updateImageSchema("Gambar cover"),
   type: z
-    .enum(["credit", "quota", "games", "bill"], {
+    .enum(["credit", "quota", "games", "bill", "credit_quota"], {
       message: "Tipe harus salah satu dari: pulsa, kuota, permainan, tagihan",
     })
     .optional(),
