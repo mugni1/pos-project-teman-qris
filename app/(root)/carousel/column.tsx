@@ -13,6 +13,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CopyIcon, MoreHorizontalIcon } from "lucide-react";
 import DeleteCarousel from "./_form/delete.carousel";
 import UpdateCarousel from "./_form/update.carousel";
+import ImageWithSkeleton from "@/components/layout/image-with-skeleton";
 
 export const columns = (params?: GetParams): ColumnDef<Carousel>[] => [
   {
@@ -21,11 +22,12 @@ export const columns = (params?: GetParams): ColumnDef<Carousel>[] => [
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <div className="w-60">
-          <img
+        <div className="w-60 aspect-video">
+          <ImageWithSkeleton
             src={data.image_url}
-            alt={data.title}
-            className="aspect-video rounded-md w-full object-cover bg-muted-foreground"
+            alt="image"
+            width={200}
+            height={200}
           />
         </div>
       );

@@ -10,9 +10,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { CopyIcon, Eye, MoreHorizontalIcon, PencilIcon } from "lucide-react";
-import DeleteCategory from "./_form/delete.category";
+import { CopyIcon, MoreHorizontalIcon } from "lucide-react";
 import { UpdateCategory } from "./_form/update.category";
+import DeleteCategory from "./_form/delete.category";
+import ImageWithSkeleton from "@/components/layout/image-with-skeleton";
 
 export const columns = (params?: GetParams): ColumnDef<Category>[] => [
   {
@@ -22,11 +23,12 @@ export const columns = (params?: GetParams): ColumnDef<Category>[] => [
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <div>
-          <img
+        <div className="h-20 aspect-square">
+          <ImageWithSkeleton
             src={data.image_url}
-            alt={data.title}
-            className="bg-muted-foreground aspect-square rounded-md h-20 "
+            alt="image"
+            width={200}
+            height={200}
           />
         </div>
       );
@@ -40,10 +42,11 @@ export const columns = (params?: GetParams): ColumnDef<Category>[] => [
       const data = row.original;
       return (
         <div className="w-60 h-20">
-          <img
+          <ImageWithSkeleton
             src={data.cover_url}
-            alt={data.title}
-            className="bg-muted-foreground rounded-md  w-full h-full object-cover object-center"
+            alt="image"
+            width={400}
+            height={200}
           />
         </div>
       );

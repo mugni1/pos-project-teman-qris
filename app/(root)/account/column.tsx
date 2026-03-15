@@ -26,7 +26,7 @@ export const columns: ColumnDef<User>[] = [
               src={data.avatar ?? "/blankpp.jpg"}
               alt={data.firstname ?? "Anonim"}
             />
-            <AvatarFallback>{fallback}</AvatarFallback>
+            <AvatarFallback className="bg-muted animate-pulse"></AvatarFallback>
           </Avatar>
         </div>
       );

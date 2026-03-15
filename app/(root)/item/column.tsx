@@ -13,6 +13,7 @@ import { CopyIcon, MoreHorizontalIcon } from "lucide-react";
 import DeleteItem from "./_form/delete.item";
 import UpdateItem from "./_form/update.item";
 import { GetParams } from "@/@types/global.type";
+import ImageWithSkeleton from "@/components/layout/image-with-skeleton";
 
 export const columns = (params?: GetParams): ColumnDef<Item>[] => [
   {
@@ -22,11 +23,12 @@ export const columns = (params?: GetParams): ColumnDef<Item>[] => [
     cell: ({ row }) => {
       const data = row.original;
       return (
-        <div>
-          <img
+        <div className="w-15 aspect-square">
+          <ImageWithSkeleton
             src={data.image_url}
-            alt={data.title}
-            className="aspect-square rounded-md w-15 object-cover"
+            alt="image"
+            width={200}
+            height={200}
           />
         </div>
       );
