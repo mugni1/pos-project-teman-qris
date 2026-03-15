@@ -127,11 +127,6 @@ const data = {
       icon: IconSettings,
     },
     {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
-    },
-    {
       title: "Search",
       url: "#",
       icon: IconSearch,
@@ -142,16 +137,6 @@ const data = {
       name: "Data Library",
       url: "#",
       icon: IconDatabase,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
     },
   ],
 };
