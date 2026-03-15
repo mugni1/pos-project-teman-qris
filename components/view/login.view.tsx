@@ -70,7 +70,8 @@ export function LoginForm({
       Cookies.set("token", result.data?.token || "");
       Cookies.set("role", result.data?.user.role || "");
       changeData(result.data?.user);
-      router.push("/");
+      console.log("redirecting...");
+      router.replace("/");
     }
   };
 
