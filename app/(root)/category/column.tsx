@@ -76,7 +76,7 @@ export const columns = (params?: GetParams): ColumnDef<Category>[] => [
           {data.type == "credit" && "Pulsa"}
           {data.type == "quota" && "Kuota"}
           {data.type == "games" && "Permainan"}
-          {data.type == "check" && "Tagihan"}
+          {data.type == "bill" && "Tagihan"}
         </div>
       );
     },
