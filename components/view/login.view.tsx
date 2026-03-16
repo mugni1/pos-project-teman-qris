@@ -67,11 +67,11 @@ export function LoginForm({
       toast.error(result.message);
     } else {
       toast.success(result.message);
-      Cookies.set("token", result.data?.token || "");
-      Cookies.set("role", result.data?.user.role || "");
+      Cookies.set("token", result.data?.token || "", { path: "/" });
+      Cookies.set("role", result.data?.user.role || "", { path: "/" });
       changeData(result.data?.user);
-      console.log("redirecting...");
       router.replace("/");
+      router.refresh();
     }
   };
 
