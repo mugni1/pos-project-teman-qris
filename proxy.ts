@@ -5,6 +5,11 @@ export function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const role = request.cookies.get("role")?.value;
   const pathname = request.nextUrl.pathname;
+
+  const isCategoryPage = pathname === "/category";
+  const isItemPage = pathname === "/item";
+  const isNewsPage = pathname === "/news";
+  const isCarouselPage = pathname === "/carousel";
   const isHomePage = pathname === "/";
   const isLoginPage = pathname === "/login";
 
@@ -12,8 +17,39 @@ export function proxy(request: NextRequest) {
   if (isHomePage && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
-  // Kalau akses "/" tapi bukan super_user
   if (isHomePage && role !== "super_user") {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Kalau akses "/category" tapi belum login
+  if (isCategoryPage && !token) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+  if (isCategoryPage && role !== "super_user") {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Kalau akses "/item" tapi belum login
+  if (isItemPage && !token) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+  if (isItemPage && role !== "super_user") {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Kalau akses "/news" tapi belum login
+  if (isNewsPage && !token) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+  if (isNewsPage && role !== "super_user") {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  // Kalau akses "/carousel" tapi belum login
+  if (isCarouselPage && !token) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+  if (isCarouselPage && role !== "super_user") {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
