@@ -27,7 +27,7 @@ import {
   LogInIcon,
   Mail,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   InputGroup,
   InputGroupAddon,
@@ -38,20 +38,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useLogin } from "@/hooks/useLogin";
 import z from "zod";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Cookies from "js-cookie";
 import { useAuthStore } from "@/stores/useAuthStore";
 import Link from "next/link";
 
-export function LoginForm({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  // state
-  const { mutateAsync, isPending } = useLogin();
-  const [isPassword, setIsPassword] = useState(true);
-  const router = useRouter();
+export function LoginForm() {
   const { changeData } = useAuthStore();
+
+  // state
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const message = searchParams.get("message");
+  const [isPassword, setIsPassword] = useState(true);
+  const { mutateAsync, isPending } = useLogin();
 
   // form
   const form = useForm({
@@ -76,11 +76,16 @@ export function LoginForm({
       router.refresh();
     }
   };
-
   const handleAuthGoogle = () => {
-    window.location.href = `http://localhost:5055/auth/google?redirect=http://localhost:3000`;
+    window.location.href = `${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/google?redirect=${process.env.NEXT_PUBLIC_BASE_ORIGIN_URL}`;
   };
 
+  // effect
+  useEffect(() => {
+    if (message && message.length > 1) {
+      toast.error(message.split("_").join(" "));
+    }
+  }, [[message]]);
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -93,7 +98,7 @@ export function LoginForm({
           </div>
           POS eBelanja
         </Link>
-        <div className={cn("flex flex-col gap-6", className)} {...props}>
+        <div className={cn("flex flex-col gap-6")}>
           <Card>
             <CardHeader className="text-center gap-1">
               <CardTitle className="text-xl ">Selamat Datang Kembali</CardTitle>
