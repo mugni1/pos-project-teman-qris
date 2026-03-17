@@ -1,0 +1,11 @@
+services:
+  app:
+    build:
+      context: .
+      args:
+        NEXT_PUBLIC_BASE_API_URL: ${NEXT_PUBLIC_BASE_API_URL}
+        NEXT_PUBLIC_BASE_ORIGIN_URL: ${NEXT_PUBLIC_BASE_ORIGIN_URL}
+        NEXT_PUBLIC_TIMEOUT: ${NEXT_PUBLIC_TIMEOUT}
+    ports:
+      - "3000:3000"
+    restart: always
