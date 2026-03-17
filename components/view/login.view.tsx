@@ -27,7 +27,7 @@ import {
   LogInIcon,
   Mail,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   InputGroup,
   InputGroupAddon,
@@ -84,6 +84,7 @@ export function LoginForm() {
   useEffect(() => {
     if (message && message.length > 1) {
       toast.error(message.split("_").join(" "));
+      router.replace(`/login`);
     }
   }, [[message]]);
   return (
