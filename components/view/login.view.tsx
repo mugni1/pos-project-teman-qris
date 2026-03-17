@@ -75,6 +75,10 @@ export function LoginForm({
     }
   };
 
+  const handleAuthGoogle = () => {
+    window.location.href = `http://localhost:5055/auth/google?redirect=http://localhost:3000`;
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -88,7 +92,11 @@ export function LoginForm({
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <FieldGroup>
               <Field>
-                <Button variant="outline" type="button">
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={handleAuthGoogle}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
