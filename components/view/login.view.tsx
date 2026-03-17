@@ -82,7 +82,7 @@ export function LoginForm() {
 
   // effect
   useEffect(() => {
-    if (message && message.length > 1) {
+    if (message && message.length > 0) {
       toast.error(message.split("_").join(" "));
       router.replace(`/login`);
     }
